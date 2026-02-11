@@ -1,0 +1,70 @@
+[0;34m🔒 Skill Security Tester[0m
+[0;34m=======================[0m
+Testing: https://raw.githubusercontent.com/erichowens/some_claude_skills/main/.claude/skills/personal-finance-coach/SKILL.md
+Report: /Users/burakseyman/.claude/skills/skill-security-auditor/reports/test-20260209_180303.txt
+
+[0;34m[1/12] Acquiring skill file...[0m
+  📥 Downloading from URL...
+[0;32m  ✅ Skill acquired (     152 lines)[0m
+
+[0;34m[2/12] Scanning for dangerous patterns...[0m
+[0;32m  ✅ No dangerous patterns found[0m
+
+[0;34m[3/12] Checking for code obfuscation...[0m
+[0;32m  ✅ No obfuscation detected[0m
+
+[0;34m[4/12] Analyzing network calls...[0m
+[0;32m  ✅ No hardcoded URLs[0m
+
+[0;34m[5/12] Checking file operations...[0m
+[1;33m  ⚠️         1 file operations detected[0m
+    4:allowed-tools: Read,Write,Edit,Bash,mcp__firecrawl__firecrawl_search,WebFetch
+
+[0;34m[6/12] Checking credential access...[0m
+[0;32m  ✅ No credential access detected[0m
+
+[0;34m[7/12] Checking external dependencies...[0m
+  📦 pip dependencies:
+[0;32m    ✅ numpy (trusted)[0m
+
+[0;34m[8/12] Checking privilege requirements...[0m
+[0;32m  ✅ No privilege escalation[0m
+
+[0;34m[9/12] Extracting metadata...[0m
+  📝 Skill name: personal-finance-coach
+  📄 Description: Expert personal finance coach with deep knowledge of tax optimization, investment theory (MPT, facto...
+
+[0;34m[10/12] Checking allowed tools...[0m
+  🔧 Allowed tools: Read,Write,Edit,Bash,mcp__firecrawl__firecrawl_search,WebFetch
+[1;33m    ⚠️  Bash access (review commands)[0m
+[1;33m    ⚠️  File modification access[0m
+
+[0;34m[11/12] Analyzing code complexity...[0m
+  📊 Bash code blocks: 1
+  📊 Python code blocks: 0
+0
+  📊 Executable lines: ~       0
+
+[0;34m[12/12] Calculating final risk score...[0m
+
+[0;34m═══════════════════════════════════[0m
+[0;34m        FINAL SECURITY REPORT       [0m
+[0;34m═══════════════════════════════════[0m
+
+📊 [0;34mOVERALL RISK SCORE: 20/100[0m
+
+🟡 [1;33mVERDICT: MEDIUM RISK[0m
+   Review carefully before use, test in sandbox
+
+📋 [0;34mRECOMMENDATION: APPROVE WITH CAUTION[0m
+
+📈 [0;34mAnalysis Summary:[0m
+   - Lines analyzed:      152
+   - Dangerous patterns: 0
+   - Network URLs: 0
+0
+   - File operations:        1
+   - Credential access: 0
+
+📄 Full report saved to: /Users/burakseyman/.claude/skills/skill-security-auditor/reports/test-20260209_180303.txt
+

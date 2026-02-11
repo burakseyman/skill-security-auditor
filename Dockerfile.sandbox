@@ -1,0 +1,37 @@
+# Dockerfile.sandbox
+# Isolated sandbox for testing Claude Skills
+# Usage: docker build -f Dockerfile.sandbox -t skill-sandbox .
+#        docker run --rm --network=none -v $(pwd)/test-skill:/skill skill-sandbox
+
+FROM ubuntu:22.04
+
+# Install basic tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    python3 \
+    python3-pip \
+    nodejs \
+    npm \
+    inotify-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m -s /bin/bash skilltest
+USER skilltest
+WORKDIR /home/skilltest
+
+# Copy test script
+COPY --chown=skilltest:skilltest skill-security-test.sh /home/skilltest/
+
+# Create monitoring script
+RUN echo '#!/bin/bash\n\
+echo "=== File Access Monitor ==="\n\
+inotifywait -m -r /home/skilltest 2>&1 &\n\
+echo "=== Network Monitor ==="\n\
+# Network is disabled but log attempts\n\
+tail -f /dev/null\n\
+' > /home/skilltest/monitor.sh && chmod +x /home/skilltest/monitor.sh
+
+# Entry point
+CMD ["/bin/bash", "-c", "/home/skilltest/monitor.sh"]
