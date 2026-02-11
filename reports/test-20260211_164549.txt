@@ -1,5 +1,0 @@
-[0;34m🔒 Skill Security Tester[0m
-[0;34m=======================[0m
-Testing: 
-Report: /Users/burakseyman/.claude/skills/skill-security-auditor/reports/test-20260211_164549.txt
-
