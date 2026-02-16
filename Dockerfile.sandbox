@@ -3,9 +3,9 @@
 # Usage: docker build -f Dockerfile.sandbox -t skill-sandbox .
 #        docker run --rm --network=none -v $(pwd)/test-skill:/skill skill-sandbox
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
-# Install basic tools
+# Install basic tools + security scanners
 RUN apt-get update && apt-get install -y \
     curl \
     git \
@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     npm \
     inotify-tools \
+    shellcheck \
+    jq \
+    strace \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
@@ -27,9 +30,10 @@ COPY --chown=skilltest:skilltest skill-security-test.sh /home/skilltest/
 # Create monitoring script
 RUN echo '#!/bin/bash\n\
 echo "=== File Access Monitor ==="\n\
-inotifywait -m -r /home/skilltest 2>&1 &\n\
-echo "=== Network Monitor ==="\n\
-# Network is disabled but log attempts\n\
+inotifywait -m -r /home/skilltest 2>&1 | tee /home/skilltest/file-access.log &\n\
+echo "=== Process Monitor ==="\n\
+while true; do ps aux >> /home/skilltest/process.log; sleep 2; done &\n\
+echo "Monitoring active. Logs: file-access.log, process.log"\n\
 tail -f /dev/null\n\
 ' > /home/skilltest/monitor.sh && chmod +x /home/skilltest/monitor.sh
 
